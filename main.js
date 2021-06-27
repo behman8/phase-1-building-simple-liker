@@ -21,20 +21,27 @@ function liked(buttons) {
 function heartFullToEmpty(heart) {
   const glyph = heart.innerText
   if(glyph == EMPTY_HEART) {
+    heart.className = 'activated-heart'
     heart.innerText = FULL_HEART;
   } else {
+    heart.className = ' '
     heart.innerText = EMPTY_HEART
   }
 }
 
 function likeOrUnlike() {
   const errorModal = document.getElementById('modal')
+  const p = document.getElementById('modal-message')
   return mimicServerCall()
   .then(data => {
     console.log(data)
   })
   .catch((error) => {
-    console.error(setTimeout(errorModal.removeAttribute('class'), 3000), error)
+    errorModal.className = ' '
+    setTimeout(function cb() {
+      errorModal.className = 'hidden'
+      p.innerText = console.error();
+    }, 3000)
   })
 };
 
